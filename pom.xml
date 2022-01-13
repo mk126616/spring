@@ -43,7 +43,7 @@
         </dependency>
         <!--        rabbitmq-->
 
-<!--es-->
+<!--es依赖-->
         <dependency>
             <groupId>org.elasticsearch</groupId>
             <artifactId>elasticsearch</artifactId>
