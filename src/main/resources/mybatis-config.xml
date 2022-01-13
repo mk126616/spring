@@ -20,6 +20,7 @@
     加入大baseid即如：<select id="findeStudentList" resultMap="r1" databaseId="development">
     select * from student ;
 
+
 </select>-->
     <environments default="development">
         <environment id="development"><!--环境-->
