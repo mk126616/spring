@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:elasticsearch="http://www.springframework.org/schema/data/elasticsearch"
+       xsi:schemaLocation="http://www.springframework.org/schema/data/elasticsearch http://www.springframework.org/schema/data/elasticsearch/spring-elasticsearch.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+<!--    &lt;!&ndash; 必须指向存放repository文件的包 &ndash;&gt;-->
+<!--    <elasticsearch:repositories base-package="com.mk.elasticsearch" />-->
+
+<!--    &lt;!&ndash; 配置Client &ndash;&gt;-->
+<!--    <elasticsearch:transport-client id="client" cluster-nodes="192.168.62.134:9300"/>-->
+
+<!--    &lt;!&ndash; 配置搜索模板 &ndash;&gt;-->
+<!--    <bean id="elasticsearchTemplate"-->
+<!--          class="org.springframework.data.elasticsearch.core.ElasticsearchTemplate">-->
+<!--        <constructor-arg name="client" ref="client" />-->
+<!--    </bean>-->
+</beans>
