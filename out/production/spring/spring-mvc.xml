@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+       http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+      http://www.springframework.org/schema/context
+      http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+     http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+      http://www.springframework.org/schema/mvc
+      http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+    <bean
+            class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <value>classpath:jdbc</value>
+        </property>
+    </bean>
+    <!--开启aop-->
+    <aop:aspectj-autoproxy/>
+
+<!--    &lt;!&ndash;开启组件扫描&ndash;&gt;-->
+    <context:component-scan base-package="com.mk.**"></context:component-scan>
+
+    <!--数据库连接池配置 -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+          destroy-method="close" lazy-init="false">
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="initialSize" value="1"/>
+        <property name="maxActive" value="50"/>
+        <property name="maxWait" value="30000"/>
+
+        <property name="filters" value="stat,wall"/>
+        <property name="timeBetweenEvictionRunsMillis" value="3000"/>
+        <property name="minEvictableIdleTimeMillis" value="300000"/>
+        <property name="validationQuery" value="SELECT 'x'"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="testOnBorrow" value="false"/>
+        <property name="testOnReturn" value="false"/>
+        <property name="poolPreparedStatements" value="true"/>
+        <property name="maxPoolPreparedStatementPerConnectionSize"
+                  value="20"/>
+    </bean>
+    <!--自定一数据源实现-->
+    <bean id="myDataSource" class="com.mk.service.datasource.MyDataSource">
+        <property name="targetDataSources">
+            <map>
+                <entry key="datasource" value-ref="dataSource">
+                </entry>
+            </map>
+        </property>
+    </bean>
+    <!--    静态资源放行-->
+    <mvc:default-servlet-handler/>
+    <!--    webservice-->
+    <bean id="userServiceBean" class="com.mk.service.webservice.WebserviceImpl"/>
+    <bean id="inMessageInterceptor" class="org.apache.cxf.interceptor.LoggingInInterceptor"/>
+    <bean id="outLoggingInterceptor" class="org.apache.cxf.interceptor.LoggingOutInterceptor"/>
+    <jaxws:server id="userService" serviceClass="com.mk.service.webservice.Webservice" address="users">
+        <jaxws:serviceBean>
+            <ref bean="userServiceBean"/>
+        </jaxws:serviceBean>
+        <jaxws:inInterceptors>
+            <ref bean="inMessageInterceptor"/>
+        </jaxws:inInterceptors>
+        <jaxws:outInterceptors>
+            <ref bean="outLoggingInterceptor"/>
+        </jaxws:outInterceptors>
+    </jaxws:server>
+</beans>

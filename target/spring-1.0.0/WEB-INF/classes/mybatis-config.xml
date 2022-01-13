@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <properties resource="jdbc.properties"></properties>
+    <!--导入参数来源-->
+    <settings>
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+        <!--用于生成可视的sql命令-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings><!--配置驼峰命名法必须在properties后面，有顺序，ctr然后点configuration查看顺序-->
+    <typeAliases>
+        <!--<typeAlias type="com.yujian.pojo.Student" alias="s2"></typeAlias>-->
+        <!--如果用上面这种，则每个pojo里面的类都需要加入进来写别名-->
+        <package name="com.yujian.pojo"></package>
+        <!--如果上面这种，则自动扫描包pojo下的注解类的别名-->
+    </typeAliases>
+    <!--environments可以写多个，然后通过写id，在StudentMapper.xml下的sql语句中
+    加入大baseid即如：<select id="findeStudentList" resultMap="r1" databaseId="development">
+    select * from student ;
+</select>-->
+    <environments default="development">
+        <environment id="development"><!--环境-->
+            <transactionManager type="JDBC"/><!--事务管理器-->
+            <dataSource type="POOLED"><!--数据源-->
+                <property name="driver" value="${mysql.driver}"/>
+                <property name="url" value="${mysql.url}"/>
+                <property name="username" value="${mysql.username}"/>
+                <property name="password" value="${mysql.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <!--<mapper resource="com/yujian/model/StudentMapper.xml"/>
+        <mapper resource="com/yujian/model/ClassInfoMapper.xml"/>-->
+        <!--设置反射来源-->
+        <!--或者用下面这种，可以自动查询包下所有文件-->
+        <package name="com.yujian.model"></package>
+        <!--<mapper class="com.yujian.model.StudentMapper"></mapper>这种也可以-->
+    </mappers>
+</configuration>

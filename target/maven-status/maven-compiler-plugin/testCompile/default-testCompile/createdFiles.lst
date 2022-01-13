@@ -1,0 +1,4 @@
+com\test\CglibTest.class
+com\test\ExpressionTest.class
+com\test\AopTest.class
+com\test\TransactionTest.class
