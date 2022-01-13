@@ -8,7 +8,6 @@
 
 <!--    &lt;!&ndash; 必须指向存放repository文件的包 &ndash;&gt;-->
 <!--    <elasticsearch:repositories base-package="com.mk.elasticsearch" />-->
-
 <!--    &lt;!&ndash; 配置Client &ndash;&gt;-->
 <!--    <elasticsearch:transport-client id="client" cluster-nodes="192.168.62.134:9300"/>-->
 
